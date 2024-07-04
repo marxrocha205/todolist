@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Gerenciador de Tarefas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+      .task-item {
+        cursor: pointer;
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="mt-4">Gerenciador de Tarefas</h1>
+      <form action="{{ url_for('add') }}" method="POST" class="form-inline my-4">
+        <input type="text" name="task" class="form-control mr-2" placeholder="Nova tarefa">
+        <button type="submit" class="btn btn-primary">Adicionar</button>
+      </form>
+      <ul class="list-group" id="task-list">
+        {% for task in tasks %}
+          <li class="list-group-item task-item" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', '{{ loop.index0 }}')">
+            {{ task }}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="taskModalLabel">Gerenciar Tarefa</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <button id="edit-task" class="btn btn-warning btn-block">Editar</button>
+            <button id="delete-task" class="btn btn-danger btn-block">Apagar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
